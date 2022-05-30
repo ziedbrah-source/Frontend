@@ -27,7 +27,7 @@ const CameraItem = ({ camera }) => {
         <View style={styles.row}>
           <Text style={styles.title}>Your Cam ID: {camera.id}</Text>
           <Text style={styles.subtitle}>
-            Puchase date is : {new Date(camera.createdAt).toLocaleDateString()}
+            Purchase date is : {new Date(camera.createdAt).toLocaleDateString()}
           </Text>
         </View>
       </View>

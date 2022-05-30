@@ -3,8 +3,10 @@ import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../store/auth-context';
 import { getAllCamerasForUser, createCamera } from '../util/cameras';
 import CameraItem from '../components/CameraItem';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 export default CamerasScreen = () => {
   const [cameras, setCameras] = useState([]);
+  const [loading, setLoading] = useState(true);
   const authCtx = useContext(AuthContext);
   useEffect(async () => {
     async function getAllCameras(token) {
@@ -20,19 +22,46 @@ export default CamerasScreen = () => {
     }
     Cameras.reverse();
     setCameras(Cameras);
+    setLoading(false);
   }, []);
+  if (loading) {
+    return <LoadingOverlay message={'Retreiving Camera'}></LoadingOverlay>;
+  }
   return (
-    <View style={styles.page}>
-      <FlatList
-        data={cameras}
-        renderItem={({ item }) => <CameraItem camera={item} />}
-        showsVerticalScrollIndicator={false}
-      />
+    <View
+      style={[
+        styles.page,
+        cameras.length <= 0 ? styles.rootContainer : styles.page,
+      ]}
+    >
+      {cameras.length == 0 && (
+        <Text style={(styles.rootContainer, styles.title)}>
+          No Cameras for You YET 🤓
+        </Text>
+      )}
+      {cameras.length > 0 && (
+        <FlatList
+          data={cameras}
+          renderItem={({ item }) => <CameraItem camera={item} />}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </View>
   );
 };
 const styles = StyleSheet.create({
   page: {
     padding: 10,
+  },
+  rootContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
   },
 });

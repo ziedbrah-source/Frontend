@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
+import NotificationScreenDetails from './screens/NotificationScreenDetails';
 import { Colors } from './constants/styles';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
 import ProfileScreen from './screens/ProfileScreen';
@@ -22,6 +22,7 @@ import CamerasScreen from './screens/CamerasScreen.js';
 import NotificationsScreen from './screens/NotificationsScreen';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import CameraDetailsScreen from './screens/CameraDetailsScreen';
 const fetchFont = () => {
   return Font.loadAsync({
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
@@ -29,9 +30,26 @@ const fetchFont = () => {
   });
 };
 
-const Stack = createNativeStackNavigator();
+const AuthentificationStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
+const HomeStack = createNativeStackNavigator();
+const HomeStackNavigator = () => {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home" component={CamerasScreen} />
+      <HomeStack.Screen
+        name="Restaurant"
+        component={CameraDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <HomeStack.Screen
+        name="Notification"
+        component={NotificationScreenDetails}
+      />
+    </HomeStack.Navigator>
+  );
+};
 const TabNavigator = () => {
   return (
     <Tab.Navigator
@@ -42,7 +60,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen
         name="Home 2"
-        component={WelcomeScreen}
+        component={HomeStackNavigator}
         options={() => ({
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="home" size={size} color={color} />
@@ -72,16 +90,16 @@ const TabNavigator = () => {
 };
 function AuthStack() {
   return (
-    <Stack.Navigator
+    <AuthentificationStack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primary500 },
         headerTintColor: 'white',
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-    </Stack.Navigator>
+      <AuthentificationStack.Screen name="Login" component={LoginScreen} />
+      <AuthentificationStack.Screen name="Signup" component={SignupScreen} />
+    </AuthentificationStack.Navigator>
   );
 }
 
@@ -91,7 +109,7 @@ function AuthenticatedStack() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={{
-        //headerShown: false,
+        headerShown: false,
         drawerActiveBackgroundColor: '#aa18ea',
         drawerActiveTintColor: '#fff',
         drawerInactiveTintColor: '#333',

@@ -18,7 +18,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CamerasScreen from './screens/CamerasScreen';
+import CamerasScreen from './screens/CamerasScreen.js';
 import NotificationsScreen from './screens/NotificationsScreen';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';

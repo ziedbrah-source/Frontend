@@ -17,14 +17,59 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CamerasScreen from './screens/CamerasScreen';
+import NotificationsScreen from './screens/NotificationsScreen';
+import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 const fetchFont = () => {
   return Font.loadAsync({
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
     'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
   });
 };
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+      }}
+    >
+      <Tab.Screen
+        name="Home 2"
+        component={WelcomeScreen}
+        options={() => ({
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="home" size={size} color={color} />
+          ),
+        })}
+      />
+      <Tab.Screen
+        name="Cameras"
+        component={CamerasScreen}
+        options={() => ({
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="camera" size={size} color={color} />
+          ),
+        })}
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={() => ({
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="notifications" size={size} color={color} />
+          ),
+        })}
+      />
+    </Tab.Navigator>
+  );
+};
 function AuthStack() {
   return (
     <Stack.Navigator
@@ -59,7 +104,7 @@ function AuthenticatedStack() {
     >
       <Drawer.Screen
         name="Home"
-        component={WelcomeScreen}
+        component={TabNavigator}
         options={{
           drawerIcon: ({ color }) => (
             <AntDesign name="home" size={24} color={color} />

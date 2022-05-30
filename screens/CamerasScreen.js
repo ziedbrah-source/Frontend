@@ -5,6 +5,7 @@ import { getAllCamerasForUser, createCamera } from '../util/cameras';
 import CameraItem from '../components/CameraItem';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import Header from '../components/Header';
+import { ScrollView } from 'react-native-gesture-handler';
 export default CamerasScreen = () => {
   const [cameras, setCameras] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,7 @@ export default CamerasScreen = () => {
           <FlatList
             data={cameras}
             renderItem={({ item }) => <CameraItem camera={item} />}
-            showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={true}
           />
         )}
       </View>

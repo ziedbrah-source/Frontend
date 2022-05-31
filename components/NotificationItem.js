@@ -1,28 +1,30 @@
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 const DEFAULT_IMAGE =
   'https://m.media-amazon.com/images/I/61ZZMqjlfSL._AC_SX466_.jpg';
-const NotificationItem = ({ notification }) => {
+const NotificationItem = ({ notification, withOutImage }) => {
+  const navigation = useNavigation();
   const onPress = () => {
     navigation.navigate('Notification', { id: notification.id });
   };
-  console.log(notification);
   return (
     <Pressable onPress={onPress} style={styles.cameraContainer}>
       <View style={styles.innerContainer}>
-        <Image
-          source={{
-            uri: DEFAULT_IMAGE,
-          }}
-          style={styles.image}
-        />
+        {!withOutImage && (
+          <Image
+            source={{
+              uri: DEFAULT_IMAGE,
+            }}
+            style={styles.image}
+          />
+        )}
         <View style={styles.row}>
           <Text style={styles.title}>
             Your Notification ID: {notification.id}
           </Text>
-          <Text style={styles.subtitle}>
-            Notification created At :
-            {new Date(notification.createdAt).toLocaleDateString()}
+          <Text style={styles.title}>
+            Date :{new Date(notification.createdAt).toLocaleDateString()}
           </Text>
         </View>
         <View style={styles.row}>

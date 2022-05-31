@@ -19,7 +19,7 @@ async function logIn(email, password) {
     password: password,
   });
   const token = response.data.access_token;
-  console.log(token);
+  //console.log(token);
   return token;
 }
 

@@ -198,7 +198,6 @@ function Root() {
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => {
-      console.log('HEDHA EL TOKEn', token);
       setExpoPushToken(token);
       authCtx.putDeviceToken(token);
     });

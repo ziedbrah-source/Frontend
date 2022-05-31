@@ -6,12 +6,10 @@ import LoadingOverlay from '../components/ui/LoadingOverlay';
 import {
   TouchableWithoutFeedback,
   Keyboard,
-  Image,
-  useWindowDimensions,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import { createUser } from '../util/auth';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 function SignupScreen({ navigation }) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -54,7 +52,9 @@ function SignupScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <AuthContent onAuthenticate={signupHandler}></AuthContent>
+      <ScrollView>
+        <AuthContent onAuthenticate={signupHandler}></AuthContent>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }

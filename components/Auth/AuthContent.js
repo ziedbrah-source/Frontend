@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import AuthForm from './AuthForm';
 import Button from '../ui/Button';
+import SocialSignInButtons from '../ui/SocialSignInButton';
 
 function AuthContent({ isLogin, onAuthenticate }) {
   const navigation = useNavigation();
@@ -92,6 +93,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
           {isLogin ? 'Create a new user' : 'Log in instead'}
         </Button>
       </View>
+      <SocialSignInButtons></SocialSignInButtons>
     </View>
   );
 }

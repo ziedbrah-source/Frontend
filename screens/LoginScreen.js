@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { Alert } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import AuthContent from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
@@ -34,7 +35,11 @@ function LoginScreen() {
     return <LoadingOverlay message="Logging you in..." />;
   }
 
-  return <AuthContent isLogin onAuthenticate={loginHandler} />;
+  return (
+    <ScrollView>
+      <AuthContent isLogin onAuthenticate={loginHandler} />
+    </ScrollView>
+  );
 }
 
 export default LoginScreen;

@@ -19,9 +19,9 @@ function LoginScreen() {
     try {
       const token = await login(email, password);
       authCtx.authenticate(token);
-      console.log(authCtx.deviceToken);
+      //console.log(authCtx.deviceToken);
       const response = await PostExpoToken(authCtx.deviceToken, token);
-      console.log(response);
+      //console.log(response);
     } catch (error) {
       console.log(error);
       Alert.alert(

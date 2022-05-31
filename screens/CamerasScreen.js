@@ -5,16 +5,21 @@ import { getAllCamerasForUser, createCamera } from '../util/cameras';
 import CameraItem from '../components/CameraItem';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import Header from '../components/Header';
-import { ScrollView } from 'react-native-gesture-handler';
-export default CamerasScreen = () => {
+export default CamerasScreen = ({ navigation }) => {
   const [cameras, setCameras] = useState([]);
   const [loading, setLoading] = useState(true);
   const authCtx = useContext(AuthContext);
   useEffect(async () => {
     async function getAllCameras(token) {
-      return await getAllCamerasForUser(token);
+      try {
+        return await getAllCamerasForUser(token);
+      } catch (err) {
+        authCtx.logout();
+        navigation.navigate('Login');
+      }
     }
     const camerasResult = await getAllCameras(authCtx.token);
+
     const Cameras = [];
     for (const camera in camerasResult) {
       let Camera = {};

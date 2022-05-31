@@ -23,6 +23,9 @@ import NotificationsScreen from './screens/NotificationsScreen';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import CameraDetailsScreen from './screens/CameraDetailsScreen';
+import ConfirmEmailScreen from './screens/ConfirmEmailScreen';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
+import NewPasswordScreen from './screens/NewPasswordScreen';
 const fetchFont = () => {
   return Font.loadAsync({
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
@@ -100,6 +103,18 @@ function AuthStack() {
     >
       <AuthentificationStack.Screen name="Login" component={LoginScreen} />
       <AuthentificationStack.Screen name="Signup" component={SignupScreen} />
+      <AuthentificationStack.Screen
+        name="ConfirmEmail"
+        component={ConfirmEmailScreen}
+      />
+      <AuthentificationStack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+      />
+      <AuthentificationStack.Screen
+        name="NewPassword"
+        component={NewPasswordScreen}
+      />
     </AuthentificationStack.Navigator>
   );
 }
@@ -205,9 +220,10 @@ function Root() {
 export default function App() {
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="black" />
       <AuthContextProvider>
         <Root />
+        {/* <ConfirmEmailScreen></ConfirmEmailScreen> */}
       </AuthContextProvider>
     </>
   );

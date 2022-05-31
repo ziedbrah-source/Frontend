@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native';
 import AuthContent from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import { AuthContext } from '../store/auth-context';
-import { login } from '../util/auth';
+import { login, PostExpoToken } from '../util/auth';
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -14,12 +14,14 @@ function LoginScreen() {
 
   async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
     try {
       const token = await login(email, password);
-      console.log('TOKEN is here');
       authCtx.authenticate(token);
+      console.log(authCtx.deviceToken);
+      const response = await PostExpoToken(authCtx.deviceToken, token);
+      console.log(response);
     } catch (error) {
       console.log(error);
       Alert.alert(

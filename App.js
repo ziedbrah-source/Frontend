@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
@@ -8,7 +8,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import NotificationScreenDetails from './screens/NotificationScreenDetails';
-import { Colors } from './constants/styles';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
 import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -26,6 +25,16 @@ import CameraDetailsScreen from './screens/CameraDetailsScreen';
 import ConfirmEmailScreen from './screens/ConfirmEmailScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import NewPasswordScreen from './screens/NewPasswordScreen';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import { Platform } from 'react-native';
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 const fetchFont = () => {
   return Font.loadAsync({
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
@@ -120,7 +129,6 @@ function AuthStack() {
 }
 
 function AuthenticatedStack() {
-  //const authCtx = useContext(AuthContext);
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} />}
@@ -183,7 +191,37 @@ function Root() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
   const authCtx = useContext(AuthContext);
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) => {
+      console.log('HEDHA EL TOKEn', token);
+      setExpoPushToken(token);
+      authCtx.putDeviceToken(token);
+    });
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
   useEffect(() => {
     async function fetchToken() {
       const storedToken = await AsyncStorage.getItem('token');
@@ -227,4 +265,36 @@ export default function App() {
       </AuthContextProvider>
     </>
   );
+}
+
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Device.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
 }

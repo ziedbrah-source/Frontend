@@ -30,3 +30,19 @@ export function createUser(email, password, firstname, lastname) {
 export function login(email, password) {
   return logIn(email, password);
 }
+
+export async function PostExpoToken(deviceToken, token) {
+  const url = 'http://192.168.0.4:5500/auth/profile/expotoken/';
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const response = await axios.post(
+    url,
+    {
+      token: deviceToken,
+    },
+    config
+  );
+
+  return response.data;
+}

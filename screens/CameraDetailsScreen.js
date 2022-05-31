@@ -41,7 +41,7 @@ const CameraDetailsScreen = () => {
     return <LoadingOverlay message={'Retreiving the Camera'}></LoadingOverlay>;
   }
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ margin: 10 }}>
       <Header message="Your camera Details"></Header>
       <CameraItem camera={camera}></CameraItem>
       <FlatList

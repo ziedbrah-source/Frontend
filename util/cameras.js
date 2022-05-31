@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'http://192.168.0.3:5500/camera-products';
+const BASE_URL = 'http://192.168.0.4:5500/camera-products';
 export async function getAllCamerasForUser(token) {
   const url = BASE_URL + '/user';
   const config = {

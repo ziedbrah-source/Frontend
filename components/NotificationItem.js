@@ -11,14 +11,14 @@ const NotificationItem = ({ notification, withOutImage }) => {
   return (
     <Pressable onPress={onPress} style={styles.cameraContainer}>
       <View style={styles.innerContainer}>
-        {!withOutImage && (
+        {/* {!withOutImage && (
           <Image
             source={{
               uri: DEFAULT_IMAGE,
             }}
             style={styles.image}
           />
-        )}
+        )} */}
         <View style={styles.row}>
           <Text style={styles.title}>
             Your Notification ID: {notification.id}
@@ -77,5 +77,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     borderRadius: 8,
     overflow: 'hidden',
+    padding: 10,
   },
 });

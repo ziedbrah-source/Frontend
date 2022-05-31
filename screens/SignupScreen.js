@@ -3,8 +3,15 @@ import { Alert } from 'react-native';
 
 import AuthContent from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
-import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  TouchableWithoutFeedback,
+  Keyboard,
+  Image,
+  useWindowDimensions,
+  StyleSheet,
+} from 'react-native';
 import { createUser } from '../util/auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function SignupScreen({ navigation }) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -51,5 +58,7 @@ function SignupScreen({ navigation }) {
     </TouchableWithoutFeedback>
   );
 }
+
+const styles = StyleSheet.create({});
 
 export default SignupScreen;

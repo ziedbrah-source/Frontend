@@ -59,46 +59,45 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
       <View>
         {!isLogin && (
           <Input
-            label="First Name"
             onUpdateValue={updateInputValueHandler.bind(this, 'firstName')}
             value={enteredfirstName}
             isInvalid={firstNameIsInvalid}
+            placeholder="First Name"
           />
         )}
         {!isLogin && (
           <Input
-            label="Last Name"
             onUpdateValue={updateInputValueHandler.bind(this, 'lastName')}
             value={enteredlastName}
             isInvalid={lastNameIsInvalid}
+            placeholder="Last Name"
           />
         )}
         <Input
-          label="Email Address"
           onUpdateValue={updateInputValueHandler.bind(this, 'email')}
           value={enteredEmail}
           keyboardType="email-address"
           isInvalid={emailIsInvalid}
+          placeholder="Email address"
         />
         {!isLogin && (
           <Input
-            label="Confirm Email Address"
             onUpdateValue={updateInputValueHandler.bind(this, 'confirmEmail')}
             value={enteredConfirmEmail}
             keyboardType="email-address"
             isInvalid={emailsDontMatch}
+            placeholder="Confirm Email Address"
           />
         )}
         <Input
-          label="Password"
           onUpdateValue={updateInputValueHandler.bind(this, 'password')}
           secure
           value={enteredPassword}
           isInvalid={passwordIsInvalid}
+          placeholder="Password"
         />
         {!isLogin && (
           <Input
-            label="Confirm Password"
             onUpdateValue={updateInputValueHandler.bind(
               this,
               'confirmPassword'
@@ -106,6 +105,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
             secure
             value={enteredConfirmPassword}
             isInvalid={passwordsDontMatch}
+            placeholder="Confirm Password"
           />
         )}
         <View style={styles.buttons}>

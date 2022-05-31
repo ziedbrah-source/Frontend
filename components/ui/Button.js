@@ -1,15 +1,25 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { Colors } from '../../constants/styles';
-
-function Button({ children, onPress }) {
+function Button({ children, onPress, type = 'PRIMARY', bgColor, fgColor }) {
   return (
     <Pressable
-      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+      style={[
+        styles.container,
+        styles[`container_${type}`],
+        bgColor ? { backgroundColor: bgColor } : {},
+      ]}
       onPress={onPress}
     >
       <View>
-        <Text style={styles.buttonText}>{children}</Text>
+        <Text
+          style={[
+            styles.text,
+            styles[`text_${type}`],
+            fgColor ? { color: fgColor } : {},
+          ]}
+        >
+          {children}
+        </Text>
       </View>
     </Pressable>
   );
@@ -18,24 +28,37 @@ function Button({ children, onPress }) {
 export default Button;
 
 const styles = StyleSheet.create({
-  button: {
-    borderRadius: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    backgroundColor: Colors.primary500,
-    elevation: 2,
-    shadowColor: 'black',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+  container: {
+    width: '100%',
+
+    padding: 15,
+    marginVertical: 5,
+
+    alignItems: 'center',
+    borderRadius: 5,
   },
-  pressed: {
-    opacity: 0.7,
+
+  container_PRIMARY: {
+    backgroundColor: '#3B71F3',
   },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 16,
+
+  container_SECONDARY: {
+    borderColor: '#3B71F3',
+    borderWidth: 2,
+  },
+
+  container_TERTIARY: {},
+
+  text: {
     fontWeight: 'bold',
+    color: 'white',
+  },
+
+  text_SECONDARY: {
+    color: '#3B71F3',
+  },
+
+  text_TERTIARY: {
+    color: 'gray',
   },
 });

@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import {
+  Alert,
+  StyleSheet,
+  View,
+  Image,
+  useWindowDimensions,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import FlatButton from '../ui/FlatButton';
 import AuthForm from './AuthForm';
-import { Colors } from '../../constants/styles';
+import Button from '../ui/Button';
 
 function AuthContent({ isLogin, onAuthenticate }) {
   const navigation = useNavigation();
-
+  const { height } = useWindowDimensions();
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     password: false,
@@ -72,15 +77,20 @@ function AuthContent({ isLogin, onAuthenticate }) {
 
   return (
     <View style={styles.authContent}>
+      <Image
+        style={[styles.logo, styles.root, { height: height * 0.3 }]}
+        resizeMode="contain"
+        source={require('../../assets/images/logo.png')}
+      ></Image>
       <AuthForm
         isLogin={isLogin}
         onSubmit={submitHandler}
         credentialsInvalid={credentialsInvalid}
       />
       <View style={styles.buttons}>
-        <FlatButton onPress={switchAuthModeHandler}>
+        <Button type="TERTIARY" onPress={switchAuthModeHandler}>
           {isLogin ? 'Create a new user' : 'Log in instead'}
-        </FlatButton>
+        </Button>
       </View>
     </View>
   );
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     padding: 16,
     borderRadius: 8,
-    backgroundColor: Colors.primary800,
+    backgroundColor: '#F9FBFC',
     elevation: 2,
     shadowColor: 'black',
     shadowOffset: { width: 1, height: 1 },
@@ -103,5 +113,15 @@ const styles = StyleSheet.create({
   },
   buttons: {
     marginTop: 8,
+  },
+  logo: {
+    width: '70%',
+    maxWidth: 300,
+    maxHeight: 200,
+  },
+  root: {
+    alignItems: 'center',
+    marginLeft: 10,
+    width: '100%',
   },
 });

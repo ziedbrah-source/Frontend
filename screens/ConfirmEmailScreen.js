@@ -25,7 +25,7 @@ const ConfirmEmailScreen = ({ navigation, route }) => {
   };
 
   const onSignInPress = () => {
-    navigation.navigate('Login');
+    navigation.navigate('login');
   };
 
   const onResendPress = async () => {

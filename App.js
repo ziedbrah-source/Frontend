@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { useContext, useEffect, useState, useRef } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -179,14 +179,18 @@ function Navigation() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
+    <>
       {!authCtx.isAuthenticated && <AuthStack />}
       {authCtx.isAuthenticated && <AuthenticatedStack />}
-    </NavigationContainer>
+    </>
+
+    // </NavigationContainer>
   );
 }
 
 function Root() {
+  const navigation = useNavigation();
   const [isTryingLogin, setIsTryingLogin] = useState(true);
   const [fontLoaded, setFontLoaded] = useState(false);
 
@@ -211,7 +215,9 @@ function Root() {
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        navigation.navigate('Notification', {
+          id: response.notification.request.content.data.id,
+        });
       });
 
     return () => {
@@ -259,7 +265,9 @@ export default function App() {
     <>
       <StatusBar style="black" />
       <AuthContextProvider>
-        <Root />
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
         {/* <ConfirmEmailScreen></ConfirmEmailScreen> */}
       </AuthContextProvider>
     </>

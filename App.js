@@ -28,6 +28,7 @@ import NewPasswordScreen from './screens/NewPasswordScreen';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
+import HomeScreen from './screens/HomeScreen';
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -49,7 +50,7 @@ const HomeStack = createNativeStackNavigator();
 const HomeStackNavigator = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={CamerasScreen} />
+      <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen
         name="Camera"
         component={CameraDetailsScreen}

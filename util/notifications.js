@@ -1,10 +1,10 @@
-import axios from 'axios';
-const BASE_URL = 'http://192.168.0.4:5500/camera-products/notifications';
+import axiosInstance from '../axios';
+import requests from '../requests';
 export async function getNotificationById(token, id) {
-  const url = BASE_URL + '/' + id;
+  const url = requests.getNotifications + '/' + id;
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  const response = await axios.get(url, config);
+  const response = await axiosInstance.get(url, config);
   return response.data;
 }

@@ -1,9 +1,8 @@
-import axios from 'axios';
+import axiosInstance from '../axios';
+import requests from '../requests';
 
 async function register(email, password, firstname, lastname) {
-  const url = 'http://192.168.0.4:5500/auth/register';
-
-  const response = await axios.post(url, {
+  const response = await axiosInstance.post(requests.register, {
     email: email,
     password: password,
     firstName: firstname,
@@ -13,8 +12,7 @@ async function register(email, password, firstname, lastname) {
 }
 
 async function logIn(email, password) {
-  const url = 'http://192.168.0.4:5500/auth/login/';
-  const response = await axios.post(url, {
+  const response = await axiosInstance.post(requests.login, {
     email: email,
     password: password,
   });
@@ -32,7 +30,7 @@ export function login(email, password) {
 }
 
 export async function PostExpoToken(deviceToken, token) {
-  const url = 'http://192.168.0.4:5500/auth/profile/expotoken/';
+  const url = 'http://172.20.10.13:5500/auth/profile/expotoken/';
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };

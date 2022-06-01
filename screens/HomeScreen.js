@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
+import Header from '../components/Header';
 function HomeScreen() {
   return (
     <View style={styles.rootContainer}>
+      <Header message="Hello John Doe    "></Header>
       <Text style={styles.title}>Welcome to Attention+ 😃 </Text>
       <Text style={styles.sub}>
         Checkout your cameras and notifications Below!
